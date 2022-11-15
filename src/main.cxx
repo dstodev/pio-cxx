@@ -61,11 +61,7 @@ bool initialize_wifi()
 void setup()
 {
 	Serial.begin(115200);
-
-	// Wait up to 1 second for serial start, checking every 10ms
-	for (auto i {0}; !Serial && i < 100; ++i) {
-		delay(10 /* ms */);
-	}
+	my::wait_for_ms(Serial, 5000);  // Serial implements operator bool()
 
 	bool ok = initialize_wifi();
 
@@ -76,7 +72,7 @@ void setup()
 
 void loop()
 {
-	static uint8_t const message[] = "hello!";
+	static uint8_t const message[] = "Hello!";
 	static WiFiUDP udp;
 
 	// If this boolean becomes false, it will remain false on the next loop cycle (it is static).
