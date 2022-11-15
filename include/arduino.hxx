@@ -7,14 +7,14 @@
 
 namespace my {
 
-/// Wait up to timeout milliseconds for predicate, checking every interval.
+/// Wait up to timeout_ms for predicate, checking every interval_ms.
 /// A predicate is anything testable as a boolean, especially stateful classes which implement operator bool().
 template <typename Predicate>
-void wait_for_ms(Predicate& predicate, uint32_t timeout, uint32_t interval = 10 /* ms */)
+void wait_for(Predicate& predicate, uint32_t timeout_ms, uint32_t interval_ms = 10 /* ms */)
 {
-	auto iterations = timeout / interval;
+	auto iterations = timeout_ms / interval_ms;
 	for (auto i {0}; !predicate && i < iterations; ++i) {
-		delay(interval);
+		delay(interval_ms);
 	}
 }
 

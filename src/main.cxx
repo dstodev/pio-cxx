@@ -11,7 +11,6 @@
 using namespace project;
 using namespace ArduinoJson6194_F1;
 
-
 /// returns true on success, false otherwise
 bool load_wlan_from_json(char const* json, std::string& out_ssid, std::string& out_password)
 {
@@ -61,7 +60,7 @@ bool initialize_wifi()
 void setup()
 {
 	Serial.begin(115200);
-	my::wait_for_ms(Serial, 5000);  // Serial implements operator bool()
+	my::wait_for(Serial, 5000 /* ms */);  // Serial implements operator bool()
 
 	bool ok = initialize_wifi();
 
@@ -103,5 +102,5 @@ void loop()
 		udp.stop();
 	}
 
-	delay(1000 /* ms */);
+	delay(5000 /* ms */);
 }
