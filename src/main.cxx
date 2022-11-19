@@ -19,7 +19,7 @@ static struct
 void setup()
 {
 	Serial.begin(115'200);
-	my::wait_for(Serial, 10'000 /* ms */);  // Serial implements operator bool()
+	my::wait_for(Serial, delay, 10'000 /* ms */);  // Serial implements operator bool()
 	my::set_printer(ArduinoPrinter);
 
 	bool ok = my::initialize_wifi();
