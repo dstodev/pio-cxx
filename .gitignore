@@ -1,6 +1,6 @@
-.pio
+/.pio/
 /CMakeLists.txt
+/CMakeListsPrivate.txt
+/cmake-build-*/
+/venv/
 /wlan.cfg.hxx
-CMakeListsPrivate.txt
-cmake-build-*/
-venv/
