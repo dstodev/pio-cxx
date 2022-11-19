@@ -6,7 +6,7 @@
 
 namespace my {
 
-/// returns true on success, false otherwise
+/// Returns true on success, false otherwise.
 bool broadcast_udp_message(std::uint16_t port, std::uint8_t const* message, std::size_t message_len)
 {
 	static WiFiUDP udp;

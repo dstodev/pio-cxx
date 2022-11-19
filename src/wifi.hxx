@@ -3,7 +3,7 @@
 
 namespace my {
 
-/// returns true on success, false otherwise
+/// Returns true on success, false otherwise.
 bool initialize_wifi();
 
 }  // namespace my

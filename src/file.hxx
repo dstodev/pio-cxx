@@ -5,7 +5,7 @@
 
 namespace my {
 
-/// returns true on success, false otherwise
+/// Returns true on success, false otherwise.
 bool load_wlan_creds_from_json(char const* json, std::string& out_ssid, std::string& out_password);
 
 }  // namespace my

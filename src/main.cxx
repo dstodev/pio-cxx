@@ -1,9 +1,10 @@
 #include <sstream>
 
 #include <Arduino.h>
-#include <esp_task_wdt.h>
+#include <esp_task_wdt.h>  // for esp_task_wdt_reset()
 
 #include "constants.hxx"
+#include "esp.hxx"
 #include "udp.hxx"
 #include "wait_for.hxx"
 #include "wifi.hxx"
@@ -23,13 +24,11 @@ static bool Running = false;
 
 void setup()
 {
+	my::init_esp32_peripherals();
+
 	Serial.begin(SerialBaudRate);
 	my::wait_for(Serial, delay, WaitForSerialDelay);  // Serial implements operator bool()
 	my::set_printer(ArduinoPrinter);
-
-	// If program does not call esp_task_wdt_reset() in time, panic. (calls setup() again)
-	esp_task_wdt_init(WatchdogPanicTimeout, true);
-	esp_task_wdt_add(nullptr);
 
 	bool ok = my::initialize_wifi();
 
