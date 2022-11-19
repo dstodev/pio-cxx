@@ -18,7 +18,7 @@ bool print(char const* format, ...)
 	bool ok = false;
 
 	if (GlobalPrinter) {
-		va_list args;
+		va_list args {};
 		va_start(args, format);
 
 		const auto buffer_len = vsnprintf(nullptr, 0, format, args) + 1;
