@@ -1,12 +1,14 @@
 #include "wifi.hxx"
 
-#include <Arduino.h>
+#include <sstream>
+
 #include <WiFi.h>
-#include <WiFiAP.h>
-#include <WiFiClient.h>
 
 #include "../wlan.cfg.hxx"
 #include "file.hxx"
+#include <utilities.hxx>
+
+namespace my {
 
 bool initialize_wifi()
 {
@@ -19,15 +21,20 @@ bool initialize_wifi()
 	if (ok) {
 		WiFi.mode(WIFI_STA);
 		WiFi.begin(ssid.c_str(), password.c_str());
-		auto result = WiFi.waitForConnectResult(5000 /* ms */);
+		auto result = WiFi.waitForConnectResult(5'000 /* ms */);
 		ok = result == WL_CONNECTED;
 
 		if (!ok) {
-			Serial.println("Failed to connect to wireless network!");
-			Serial.print("Connect result: ");
-			Serial.println(result);
+			std::ostringstream msg;
+			msg << "Failed to connect to wireless network!\n"
+			    << "Connect result: " << std::to_string(static_cast<int>(result)) << '\n';
+			auto msg_str = msg.str();
+			auto msg_cstr = msg_str.c_str();
+			my::print(msg_cstr);
 		}
 	}
 
 	return ok;
 }
+
+}  // namespace my

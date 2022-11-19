@@ -1,7 +1,10 @@
 #include "udp.hxx"
 
-#include <Arduino.h>
 #include <WiFiUdp.h>
+
+#include <utilities.hxx>
+
+namespace my {
 
 /// returns true on success, false otherwise
 bool broadcast_udp_message(std::uint16_t port, std::uint8_t const* message, std::size_t message_len)
@@ -10,16 +13,18 @@ bool broadcast_udp_message(std::uint16_t port, std::uint8_t const* message, std:
 
 	bool ok = udp.beginPacket("255.255.255.255", port);
 	if (!ok) {
-		Serial.println("Could not resolve hostname or port!");
+		my::print("Could not resolve hostname or port!\n");
 	}
 
 	if (ok) {
 		udp.write(message, message_len);
 		ok = udp.endPacket() == 1;
 		if (!ok) {
-			Serial.println("Failed to send message!");
+			my::print("Failed to send message!\n");
 		}
 	}
 
 	return ok;
 }
+
+}  // namespace my

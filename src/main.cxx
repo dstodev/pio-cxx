@@ -1,28 +1,48 @@
-#include <Arduino.h>
+#include <sstream>
 
-#include <utilities.hxx>
+#include <Arduino.h>
 
 #include "udp.hxx"
 #include "wait_for.hxx"
 #include "wifi.hxx"
+#include <utilities.hxx>
+
+static struct
+{
+	static void print(char const* message)
+	{
+		Serial.print(message);
+	}
+
+} ArduinoPrinter;
 
 void setup()
 {
-	Serial.begin(115200);
-	wait_for(Serial, 5000 /* ms */);  // Serial implements operator bool()
+	Serial.begin(115'200);
+	my::wait_for(Serial, 10'000 /* ms */);  // Serial implements operator bool()
+	my::set_printer(ArduinoPrinter);
 
-	bool ok = initialize_wifi();
+	bool ok = my::initialize_wifi();
 
 	if (ok) {
-		Serial.println("Setup complete!");
+		my::print("Setup complete!\n");
 	}
 }
 
 void loop()
 {
-	static uint8_t const message[] = "Hello!";
+	static uint8_t constexpr message[] = "Hello!";
+	static uint16_t constexpr port = 58'400;
 
-	broadcast_udp_message(58400, message, sizeof(message));
+	// TODO: Make message constexpr
+	std::ostringstream echo {};
+	echo << "Broadcasting '" << message << "' on port " << port << "...";
+	auto echo_str = echo.str();
+	my::print(echo_str.c_str());
 
-	delay(5000 /* ms */);
+	if (my::broadcast_udp_message(58'400, message, sizeof(message))) {
+		my::print(" done!\n");
+	}
+
+	delay(5'000 /* ms */);
 }

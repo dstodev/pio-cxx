@@ -2,7 +2,9 @@
 
 #include "ArduinoJson.h"
 
-#include <types.hxx>
+#include <utilities.hxx>
+
+namespace my {
 
 bool load_wlan_creds_from_json(char const* json, std::string& out_ssid, std::string& out_password)
 {
@@ -12,14 +14,16 @@ bool load_wlan_creds_from_json(char const* json, std::string& out_ssid, std::str
 	bool ok = result == DeserializationError::Ok;
 
 	if (ok) {
-#define typeof(o) remove_reference_t<decltype(o)>
+#define typeof(o) std::remove_reference_t<decltype(o)>
 		out_ssid = wlan_config.getMember("ssid").as<typeof(out_ssid)>();
 		out_password = wlan_config.getMember("password").as<typeof(out_password)>();
 #undef typeof
 	}
 	else {
-		Serial.println("Could not deserialize wifi credentials!");
+		my::print("Could not deserialize wifi credentials!\n");
 	}
 
 	return ok;
 }
+
+}  // namespace my
