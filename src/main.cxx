@@ -45,11 +45,7 @@ void loop()
 	if (Running) {
 		esp_task_wdt_reset();
 
-		// TODO: Make message constexpr
-		std::ostringstream echo {};
-		echo << "Broadcasting '" << message << "' on port " << port << "...";
-		auto echo_str = echo.str();
-		my::print(echo_str.c_str());
+		my::print("Broadcasting '%s' on port %hu...", message, port);
 
 		if (my::broadcast_udp_message(58'400, message, sizeof(message))) {
 			my::print(" done!\n");

@@ -59,7 +59,9 @@ void set_printer(T printer)
 	_set_printer_internal(std::move(p));
 }
 
-void print(char const* message);
+/// Supports C-like printf format strings:
+/// https://en.wikipedia.org/wiki/Printf_format_string
+bool print(char const* format, ...);
 
 }  // namespace my
 

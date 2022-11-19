@@ -14,11 +14,11 @@ def main():
 		try:
 			# https://docs.python.org/3/library/socket.html#socket.socket.recvfrom
 			bytes, address = sock.recvfrom(128)
+			timestamp = datetime.now().strftime("%I:%M:%S %p")  # Record time as soon as possible after it was received
 		except BlockingIOError:
 			print('.', end='')
 			continue
 
-		timestamp = datetime.now().strftime("%I:%M:%S %p")  # Record time as soon as possible after it was received
 		message = bytes.decode('ascii')
 		ip = address[0]
 		port = address[1]

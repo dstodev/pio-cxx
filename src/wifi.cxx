@@ -30,12 +30,8 @@ bool initialize_wifi()
 		ok = result == WL_CONNECTED;
 
 		if (!ok) {
-			std::ostringstream msg;
-			msg << "Failed to connect to wireless network!\n"
-			    << "Connect result: " << std::to_string(static_cast<int>(result)) << '\n';
-			auto msg_str = msg.str();
-			auto msg_cstr = msg_str.c_str();
-			my::print(msg_cstr);
+			my::print("Failed to connect to wireless network!\n");
+			my::print("Connect result: %hu", result);
 		}
 	}
 
