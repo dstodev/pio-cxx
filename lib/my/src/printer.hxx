@@ -48,6 +48,7 @@ public:
 
 inline Printer::Abstraction::~Abstraction() = default;
 
+
 void _set_printer_internal(Printer&& p);
 
 /// Register global serial printer
