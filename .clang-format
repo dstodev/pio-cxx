@@ -1,5 +1,5 @@
 # 2022 Daniel Stotts
-# Version ~50
+# Version ~51
 
 ---
 BasedOnStyle: LLVM
@@ -52,7 +52,7 @@ BreakConstructorInitializers: BeforeComma
 ConstructorInitializerAllOnOneLineOrOnePerLine: false
 IncludeBlocks: Preserve
 IndentPPDirectives: None
-MaxEmptyLinesToKeep: 2
+MaxEmptyLinesToKeep: 1
 PointerAlignment: Left
 ReflowComments: true
 SortIncludes: CaseSensitive

@@ -4,7 +4,7 @@
 namespace my {
 
 /// Returns true on success, false otherwise.
-bool initialize_wifi();
+bool init_wifi();
 
 }  // namespace my
 

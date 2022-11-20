@@ -16,7 +16,7 @@
 
 namespace my {
 
-bool initialize_wifi()
+bool init_wifi()
 {
 	// https://www.arduino.cc/reference/en/libraries/wifi/
 
