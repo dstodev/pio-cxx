@@ -17,15 +17,14 @@ class Printer
 	template <typename T>
 	struct Implementation : Abstraction
 	{
-		T object;
-		explicit Implementation(T state)
-		    : object {state}
+		T* object_ref;
+		explicit Implementation(T& state_ref)
+		    : object_ref {&state_ref}
 		{}
 		~Implementation() override = default;
 		void print(char const* message) override
 		{
-			// Expects T::print(char const*)
-			object.print(message);
+			object_ref->print(message);  // Expects T::print(char const*)
 		}
 	};
 
@@ -33,8 +32,8 @@ class Printer
 
 public:
 	template <typename T>
-	explicit Printer(T object)
-	    : _impl {new Implementation<T>(object)}
+	explicit Printer(T& object)
+	    : _impl {new Implementation<T> {object}}
 	{}
 
 	void print(char const* message)
@@ -48,14 +47,15 @@ public:
 
 inline Printer::Abstraction::~Abstraction() = default;
 
-void _set_printer_internal(Printer&& p);
+void _set_printer_internal(Printer&& printer);
 
 /// Register global serial printer
 /// Expects T::print(char const*)
+/// Does not own printer state. Printer lifetime must persist for each subsequent call to print().
 template <typename T>
-void set_printer(T printer)
+void set_printer(T& printer)
 {
-	auto p = Printer(printer);
+	auto p = Printer {printer};
 	_set_printer_internal(std::move(p));
 }
 

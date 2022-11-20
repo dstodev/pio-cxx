@@ -6,15 +6,6 @@
 #include "esp.hxx"
 #include <utilities.hxx>
 
-static struct
-{
-	static void print(char const* message)
-	{
-		Serial.print(message);
-	}
-
-} ArduinoPrinter;
-
 static bool Running = false;
 
 void setup()
@@ -24,7 +15,7 @@ void setup()
 	Serial.begin(SerialBaudRate);
 	Serial.flush();
 	my::wait_for(Serial, delay, WaitForSerialDelay);  // Serial implements operator bool()
-	my::set_printer(ArduinoPrinter);
+	my::set_printer(Serial);
 
 	bool ok = my::init_wifi();
 
