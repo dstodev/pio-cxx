@@ -22,6 +22,7 @@ void setup()
 	my::init_esp32_peripherals();
 
 	Serial.begin(SerialBaudRate);
+	Serial.flush();
 	my::wait_for(Serial, delay, WaitForSerialDelay);  // Serial implements operator bool()
 	my::set_printer(ArduinoPrinter);
 
