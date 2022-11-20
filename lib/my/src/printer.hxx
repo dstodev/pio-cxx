@@ -17,7 +17,9 @@ class Printer
 	template <typename T>
 	struct Implementation : Abstraction
 	{
-		T* object;
+		/// This class ultimately decides how to persist T. It can choose to copy the object, etc.
+		T* object;  // refer to object by pointer, and expect that its lifetime is valid for the duration of *this
+
 		explicit Implementation(T& object)
 		    : object {&object}
 		{}
@@ -49,9 +51,8 @@ inline Printer::Abstraction::~Abstraction() = default;
 
 void _set_printer_internal(Printer&& printer);
 
-/// Register global serial printer
-/// Expects T::print(char const*)
-/// Does not own printer state. Printer lifetime must persist for each subsequent call to print().
+/// Register global serial printer, expecting T::print(char const*)
+/// Does not own printer. Printer lifetime must persist for each subsequent call to print().
 template <typename T>
 void set_printer(T& printer)
 {
