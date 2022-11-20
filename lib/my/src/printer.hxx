@@ -17,14 +17,14 @@ class Printer
 	template <typename T>
 	struct Implementation : Abstraction
 	{
-		T* object_ref;
-		explicit Implementation(T& state_ref)
-		    : object_ref {&state_ref}
+		T* object;
+		explicit Implementation(T& object)
+		    : object {&object}
 		{}
 		~Implementation() override = default;
 		void print(char const* message) override
 		{
-			object_ref->print(message);  // Expects T::print(char const*)
+			object->print(message);  // Expects T::print(char const*)
 		}
 	};
 
