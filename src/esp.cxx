@@ -10,7 +10,7 @@ void init_esp32_peripherals()
 	init_watchdog();
 	start_watchdog();
 
-	my::wake_up_from_sleep_after(SleepWakeupDelay);
+	init_sleep();
 }
 
 }  // namespace my

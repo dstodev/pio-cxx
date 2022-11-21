@@ -8,12 +8,12 @@
 
 namespace my {
 
-void wake_up_from_sleep_after(uint32_t time_seconds)
+void init_sleep()
 {
 	// https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-reference/system/sleep_modes.html
 	// https://github.com/espressif/esp-idf/tree/master/examples/system/
 
-	auto time_to_sleep_usec = time_seconds * 1'000'000ULL;
+	auto time_to_sleep_usec = SleepWakeupDelay * 1'000'000ULL;
 	esp_sleep_enable_timer_wakeup(time_to_sleep_usec);
 }
 
@@ -30,7 +30,7 @@ void start_sleep()
 	bool ok = result == ESP_OK;
 
 	if (ok) {
-		my::printf("my: Woke from sleep!\n");
+		my::printf("Woke from sleep!\n");
 	}
 	else {
 		my::printf("Failed to sleep!\n");
