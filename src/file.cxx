@@ -18,7 +18,7 @@ bool load_wlan_creds_from_json(char const* json, std::string& out_ssid, std::str
 		out_password = wlan_config.getMember("password").as<typeof(out_password)>();
 	}
 	else {
-		my::print("Could not deserialize wifi credentials!\n");
+		my::printf("Could not deserialize wifi credentials!\n");
 	}
 
 	return ok;

@@ -5,7 +5,7 @@
 
 namespace my {
 
-void wake_up_from_sleep_after(uint32_t time_in_seconds);
+void wake_up_from_sleep_after(uint32_t time_seconds);
 void start_sleep();
 
 }  // namespace my

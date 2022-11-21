@@ -31,8 +31,8 @@ bool init_wifi()
 		ok = result == WL_CONNECTED;
 
 		if (!ok) {
-			my::print("Failed to connect to wireless network!\n");
-			my::print("Connect result: %hu\n", result);
+			my::printf("Failed to connect to wireless network!\n");
+			my::printf("Connect result: %hhu\n", result);
 		}
 	}
 

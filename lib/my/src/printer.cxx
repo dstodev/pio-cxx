@@ -13,7 +13,7 @@ void _set_printer_internal(Printer&& p)
 	GlobalPrinter = std::make_unique<Printer>(std::forward<Printer>(p));
 }
 
-bool print(char const* format, ...)
+bool printf(char const* format, ...)
 {
 	bool ok = false;
 

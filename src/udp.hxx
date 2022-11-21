@@ -5,7 +5,7 @@
 
 namespace my {
 
-bool broadcast_udp_message(std::uint16_t port, std::uint8_t const* message, std::size_t message_len);
+bool broadcast_udp_message(uint16_t port, uint8_t const* message, std::size_t message_len);
 
 }
 

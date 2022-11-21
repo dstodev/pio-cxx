@@ -1,8 +1,6 @@
 #ifndef PIO_CXX_WAIT_FOR_HXX
 #define PIO_CXX_WAIT_FOR_HXX
 
-#include <cstdint>
-
 namespace my {
 
 /// Wait up to timeout_ms for predicate, checking every interval_ms.

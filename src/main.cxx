@@ -20,7 +20,7 @@ void setup()
 	bool ok = my::init_wifi();
 
 	if (ok) {
-		my::print("Setup complete!\n");
+		my::printf("Setup complete!\n");
 		Running = true;
 	}
 }
@@ -31,15 +31,15 @@ void loop()
 
 	if (Running) {
 		my::reset_watchdog();
-		my::print("Broadcasting '%s' on port %hu...", message, UdpBroadcastPort);
+		my::printf("Broadcasting '%s' on port %hu...", message, UdpBroadcastPort);
 
 		if (my::broadcast_udp_message(UdpBroadcastPort, message, sizeof(message))) {
-			my::print(" done!\n");
+			my::printf(" done!\n");
 		}
 		else {
 			Running = false;
 		}
 	}
 
-	delay(LoopDelay);
+	my::start_sleep();
 }

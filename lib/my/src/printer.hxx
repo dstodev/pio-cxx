@@ -18,6 +18,7 @@ class Printer
 	struct Implementation : Abstraction
 	{
 		/// This class ultimately decides how to persist T. It can choose to copy the object, etc.
+
 		T* object;  // refer to object by pointer, and expect that its lifetime is valid for the duration of *this
 
 		explicit Implementation(T& object)
@@ -26,7 +27,7 @@ class Printer
 		~Implementation() override = default;
 		void print(char const* message) override
 		{
-			object->print(message);  // Expects T::print(char const*)
+			object->printf(message);  // Expects T::printf(char const*)
 		}
 	};
 
@@ -51,8 +52,8 @@ inline Printer::Abstraction::~Abstraction() = default;
 
 void _set_printer_internal(Printer&& printer);
 
-/// Register global serial printer, expecting T::print(char const*)
-/// Does not own printer. Printer lifetime must persist for each subsequent call to print().
+/// Register global serial printer, expecting T::printf(char const*)
+/// Does not own printer. Printer lifetime must persist for each subsequent call to printf().
 template <typename T>
 void set_printer(T& printer)
 {
@@ -63,7 +64,7 @@ void set_printer(T& printer)
 /// Returns true on success, false otherwise.
 /// Supports C-like printf format strings:
 /// https://en.wikipedia.org/wiki/Printf_format_string
-bool print(char const* format, ...);
+bool printf(char const* format, ...);
 
 }  // namespace my
 
