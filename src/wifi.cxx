@@ -25,7 +25,6 @@ bool init_wifi()
 	bool ok = load_wlan_creds_from_json(wlan_json, ssid, password);
 
 	if (ok) {
-		WiFi.mode(WIFI_STA);
 		WiFi.begin(ssid.c_str(), password.c_str());
 		auto result = WiFi.waitForConnectResult(WaitForWiFiDelay);
 		ok = result == WL_CONNECTED;
