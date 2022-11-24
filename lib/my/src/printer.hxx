@@ -11,7 +11,7 @@ class Printer
 	struct Abstraction
 	{
 		virtual ~Abstraction() = 0;
-		virtual void print(char const* message) /*const*/ = 0;  // not const as Arduino Serial family is not const
+		virtual void print(char const* message) /* const */ = 0;  // not const as Arduino Serial family is not const
 	};
 
 	template <typename T>

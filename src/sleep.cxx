@@ -21,10 +21,6 @@ void start_sleep()
 {
 	my::printf("Entering sleep...\n");
 
-	// Give extra time for background tasks to process before sleeping
-	auto extra_task_processing_time_ms = WakeupExtraProcessingTime * 1'000;
-	delay(extra_task_processing_time_ms);
-
 	auto result = esp_light_sleep_start();
 
 	bool ok = result == ESP_OK;
@@ -36,6 +32,12 @@ void start_sleep()
 		my::printf("Failed to sleep!\n");
 		my::printf("Sleep result: %d\n", result);
 	}
+}
+
+void yield_for(uint32_t time_seconds)
+{
+	auto time_ms = time_seconds * 1'000;
+	delay(time_ms);
 }
 
 }  // namespace my

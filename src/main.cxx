@@ -8,19 +8,21 @@
 
 static bool Running = false;
 
+using namespace my;
+
 void setup()
 {
-	my::init_watchdog();
-	my::init_sleep();
+	init_watchdog();
+	start_watchdog();
+
+	init_sleep();
 
 	Serial.begin(SerialBaudRate);
 	Serial.flush();
-	my::wait_for(Serial, delay, WaitForSerialDelay);  // Serial implements operator bool()
-	my::set_printer(Serial);
+	wait_for(Serial, delay, WaitForSerialDelay);  // Serial implements operator bool()
+	set_printer(Serial);
 
-	bool ok = my::init_wifi();
-
-	my::start_watchdog();
+	bool ok = init_wifi();
 
 	if (ok) {
 		my::printf("Setup complete!\n");
@@ -33,16 +35,19 @@ void loop()
 	static uint8_t constexpr message[] = "Hello!";
 
 	if (Running) {
-		my::reset_watchdog();
-		my::printf("Broadcasting '%s' on port %hu...", message, UdpBroadcastPort);
+		reset_watchdog();
+		my::printf("Broadcasting '%s' on port %hu... ", message, UdpBroadcastPort);
 
-		if (my::broadcast_udp_message(UdpBroadcastPort, message, sizeof(message))) {
-			my::printf(" done!\n");
+		if (broadcast_udp_message(UdpBroadcastPort, message, sizeof(message))) {
+			my::printf("done!\n");
 		}
 		else {
 			Running = false;
+			my::printf("failed!\n");
 		}
 	}
 
-	my::start_sleep();
+	// Give execution time to other tasks before turning off some components to save power
+	yield_for(ExtraProcessingTime);
+	start_sleep();
 }
