@@ -32,8 +32,7 @@ void setup()
 		my::printf("Using ESP-IDF version: %s\n", esp_get_idf_version());
 	}
 	else {
-		delay(SleepWakeupDelay * 1'000);
-		esp_restart();
+		delay(-1);
 	}
 }
 
@@ -48,8 +47,7 @@ void loop()
 		my::printf("done!\n");
 	}
 	else {
-		delay(SleepWakeupDelay * 1'000);
-		esp_restart();
+		delay(-1);
 	}
 
 	sleep::start();
