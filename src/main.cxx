@@ -49,6 +49,5 @@ void loop()
 	}
 
 	my::printf("done!\n");
-	watchdog::reset();
 	sleep::start();
 }

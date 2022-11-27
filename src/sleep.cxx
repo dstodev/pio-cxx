@@ -3,6 +3,7 @@
 #include <esp_sleep.h>
 
 #include "constants.hxx"
+#include "watchdog.hxx"
 #include "wifi.hxx"
 #include <utilities.hxx>
 
@@ -21,21 +22,30 @@ void init()
 bool start()
 {
 	my::printf("Disabling peripherals... ");
+
 	bool ok = wifi::disable();
 	assert_ok(ok, "Failed to disable wifi!\n");
-	my::printf("done!\n");
 
+	ok = watchdog::stop();  /// Watchdog does not work properly while sleeping
+	assert_ok(ok, "Failed to disable watchdog!\n");
+
+	my::printf("done!\n");
 	my::printf("Entering sleep... ");
+
 	auto result = esp_light_sleep_start();
 	ok = result == ESP_OK;
-	assert_ok(ok, "Failed with result: %d\n", result);
-	my::printf("done!\n");
+	assert_ok(ok, "Failed to enter light sleep with result: %d\n", result);
 
+	my::printf("done!\n");
 	my::printf("Re-enabling peripherals... ");
+
+	ok = watchdog::start();
+	assert_ok(ok, "Failed to enable watchdog!\n");
+
 	ok = wifi::enable();
 	assert_ok(ok, "Failed to enable wifi!\n");
-	my::printf("done!\n");
 
+	my::printf("done!\n");
 	return ok;
 }
 

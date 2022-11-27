@@ -4,23 +4,41 @@
 #include <esp_task_wdt.h>
 
 #include "constants.hxx"
+#include <utilities.hxx>
 
 namespace my {
 namespace watchdog {
 
-void init()
+bool init()
 {
-	esp_task_wdt_init(WatchdogPanicTimeout, true);
+	auto result = esp_task_wdt_init(WatchdogPanicTimeout, true);
+	bool ok = result == ESP_OK;
+	assert_ok(ok, "Failed to init watchdog with result: %d\n", result);
+	return ok;
 }
 
-void start()
+bool start()
 {
-	esp_task_wdt_add(nullptr);
+	auto result = esp_task_wdt_add(nullptr);
+	bool ok = result == ESP_OK;
+	assert_ok(ok, "Failed to start watchdog with result: %d\n", result);
+	return ok;
 }
 
-void reset()
+bool stop()
 {
-	esp_task_wdt_reset();
+	auto result = esp_task_wdt_delete(nullptr);
+	bool ok = result == ESP_OK;
+	assert_ok(ok, "Failed to stop watchdog with result: %d\n", result);
+	return ok;
+}
+
+bool reset()
+{
+	auto result = esp_task_wdt_reset();
+	bool ok = result == ESP_OK;
+	assert_ok(ok, "Failed to reset watchdog with result: %d\n", result);
+	return ok;
 }
 
 void wait_for_panic()
