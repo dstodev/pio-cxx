@@ -49,5 +49,10 @@ void loop()
 	}
 
 	my::printf("done!\n");
-	sleep::start();
+
+	ok = sleep::start();
+	if (!ok) {
+		delay(1'000);
+		esp_restart();
+	}
 }
