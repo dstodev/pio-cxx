@@ -13,6 +13,9 @@ void start();
 /// Resets the watchdog.
 void reset();
 
+/// Waits for the watchdog to panic. Useful for fail conditions.
+void wait_for_panic();
+
 }  // namespace watchdog
 }  // namespace my
 

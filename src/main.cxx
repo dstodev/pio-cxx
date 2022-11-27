@@ -24,7 +24,7 @@ void setup()
 	wait_for(Serial, delay, WaitForSerialDelay * 1'000);  // Serial (instance of type HWCDC) implements operator bool()
 	set_printer(Serial);
 
-	watchdog::reset();  // before init_wifi() waits for Wi-Fi connection
+	watchdog::reset();  // before waiting for Wi-Fi connection
 	bool ok = wifi::init();
 
 	if (ok) {
@@ -32,7 +32,7 @@ void setup()
 		my::printf("Using ESP-IDF version: %s\n", esp_get_idf_version());
 	}
 	else {
-		delay(-1);
+		watchdog::wait_for_panic();
 	}
 }
 
@@ -43,12 +43,12 @@ void loop()
 	watchdog::reset();
 	my::printf("Broadcasting '%s' on port %hu... ", message, UdpBroadcastPort);
 
-	if (udp::broadcast_message(UdpBroadcastPort, message, sizeof(message))) {
-		my::printf("done!\n");
-	}
-	else {
-		delay(-1);
+	bool ok = udp::broadcast_message(UdpBroadcastPort, message, sizeof(message));
+	if (!ok) {
+		watchdog::wait_for_panic();
 	}
 
+	my::printf("done!\n");
+	watchdog::reset();
 	sleep::start();
 }

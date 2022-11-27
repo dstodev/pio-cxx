@@ -1,5 +1,6 @@
 #include "watchdog.hxx"
 
+#include <Arduino.h>
 #include <esp_task_wdt.h>
 
 #include "constants.hxx"
@@ -20,6 +21,11 @@ void start()
 void reset()
 {
 	esp_task_wdt_reset();
+}
+
+void wait_for_panic()
+{
+	delay(-1);  // signed-to-unsigned conversion means this waits for max-int milliseconds
 }
 
 }  // namespace watchdog
