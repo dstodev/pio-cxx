@@ -5,20 +5,22 @@
 #include "constants.hxx"
 
 namespace my {
+namespace watchdog {
 
-void init_watchdog()
+void init()
 {
 	esp_task_wdt_init(WatchdogPanicTimeout, true);
 }
 
-void start_watchdog()
+void start()
 {
 	esp_task_wdt_add(nullptr);
 }
 
-void reset_watchdog()
+void reset()
 {
 	esp_task_wdt_reset();
 }
 
+}  // namespace watchdog
 }  // namespace my

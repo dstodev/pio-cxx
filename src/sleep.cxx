@@ -1,14 +1,15 @@
 #include "sleep.hxx"
 
-#include <Arduino.h>
 #include <esp_sleep.h>
 
 #include "constants.hxx"
+#include "wifi.hxx"
 #include <utilities.hxx>
 
 namespace my {
+namespace sleep {
 
-void init_sleep()
+void init()
 {
 	// https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-reference/system/sleep_modes.html
 	// https://github.com/espressif/esp-idf/tree/master/examples/system/
@@ -17,27 +18,26 @@ void init_sleep()
 	esp_sleep_enable_timer_wakeup(time_to_sleep_usec);
 }
 
-void start_sleep()
+bool start()
 {
-	my::printf("Entering sleep...\n");
+	my::printf("Disabling peripherals... ");
+	bool ok = wifi::disable();
+	assert_ok(ok, "Failed to disable wifi!\n");
+	my::printf("done!\n");
 
+	my::printf("Entering sleep... ");
 	auto result = esp_light_sleep_start();
+	ok = result == ESP_OK;
+	assert_ok(ok, "Failed with result: %d\n", result);
+	my::printf("done!\n");
 
-	bool ok = result == ESP_OK;
+	my::printf("Re-enabling peripherals... ");
+	ok = wifi::enable();
+	assert_ok(ok, "Failed to enable wifi!\n");
+	my::printf("done!\n");
 
-	if (ok) {
-		my::printf("Woke from sleep!\n");
-	}
-	else {
-		my::printf("Failed to sleep!\n");
-		my::printf("Sleep result: %d\n", result);
-	}
+	return ok;
 }
 
-void yield_for(uint32_t time_seconds)
-{
-	auto time_ms = time_seconds * 1'000;
-	delay(time_ms);
-}
-
+}  // namespace sleep
 }  // namespace my

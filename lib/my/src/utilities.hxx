@@ -1,8 +1,9 @@
 #ifndef PIO_CXX_UTILITIES_HXX
 #define PIO_CXX_UTILITIES_HXX
 
-#include "printer.hxx"
-#include "types.hxx"
-#include "wait_for.hxx"
+#include <macros.hxx>
+#include <printer.hxx>
+#include <types.hxx>
+#include <wait_for.hxx>
 
 #endif  // PIO_CXX_UTILITIES_HXX

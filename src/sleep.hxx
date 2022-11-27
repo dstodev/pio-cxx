@@ -1,16 +1,13 @@
 #ifndef PIO_CXX_SLEEP_HXX
 #define PIO_CXX_SLEEP_HXX
 
-#include <cstdint>
-
 namespace my {
+namespace sleep {
 
-void init_sleep();
-void start_sleep();
+void init();
+bool start();
 
-/// Delay the calling task, giving execution time to other tasks.
-void yield_for(uint32_t time_seconds);
-
+}  // namespace sleep
 }  // namespace my
 
 #endif  // PIO_CXX_SLEEP_HXX
