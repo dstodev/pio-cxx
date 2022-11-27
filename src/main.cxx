@@ -28,6 +28,7 @@ void setup()
 
 	if (ok) {
 		my::printf("Setup complete!\n");
+		my::printf("Using ESP-IDF version: %s\n", esp_get_idf_version());
 		Running = true;
 	}
 }

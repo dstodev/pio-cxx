@@ -1,7 +1,5 @@
 #include "wifi.hxx"
 
-#include <sstream>
-
 #include <WiFi.h>
 
 #if __has_include("../wlan.cfg.hxx")

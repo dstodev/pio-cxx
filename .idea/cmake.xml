@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CMakeSharedSettings">
+    <configurations>
+      <configuration PROFILE_NAME="XIAO-ESP32-C3" ENABLED="true" CONFIG_NAME="seeed_xiao_esp32c3" NO_GENERATOR="true" />
+    </configurations>
+  </component>
+</project>

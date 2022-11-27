@@ -1,6 +1,5 @@
 # 2022 Daniel Stotts
 # Version ~52
-
 ---
 BasedOnStyle: LLVM
 ColumnLimit: 120
