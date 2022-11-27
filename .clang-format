@@ -1,5 +1,5 @@
 # 2022 Daniel Stotts
-# Version ~51
+# Version ~52
 
 ---
 BasedOnStyle: LLVM
@@ -31,6 +31,7 @@ AlignAfterOpenBracket: Align
 AlignConsecutiveMacros: Consecutive
 AlignEscapedNewlines: DontAlign
 AlignOperands: AlignAfterOperator
+AlignTrailingComments: false
 
 # Penalties
 PenaltyBreakAssignment: 500

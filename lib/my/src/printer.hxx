@@ -11,7 +11,7 @@ class Printer
 	struct Abstraction
 	{
 		virtual ~Abstraction() = 0;
-		virtual void print(char const* message) /* const */ = 0;  // not const as Arduino Serial family is not const
+		virtual void print(char const* message) const = 0;
 	};
 
 	template <typename T>
@@ -25,9 +25,9 @@ class Printer
 		    : object {&object}
 		{}
 		~Implementation() override = default;
-		void print(char const* message) override
+		void print(char const* message) const override
 		{
-			object->printf(message);  // Expects T::printf(char const*)
+			object->print(message);  // Expects T::print(char const* message)
 		}
 	};
 
@@ -52,7 +52,7 @@ inline Printer::Abstraction::~Abstraction() = default;
 
 void _set_printer_internal(Printer&& printer);
 
-/// Register global serial printer, expecting T::printf(char const*)
+/// Register global serial printer, expecting T::print(char const* message).
 /// Does not own printer. Printer lifetime must persist for each subsequent call to printf().
 template <typename T>
 void set_printer(T& printer)

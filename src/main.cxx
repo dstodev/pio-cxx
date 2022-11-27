@@ -1,5 +1,3 @@
-#include <sstream>
-
 #include <Arduino.h>
 
 #include "constants.hxx"
@@ -12,6 +10,7 @@ using namespace my;
 
 void setup()
 {
+	// Watchdog init/start happens first to avoid permadeath if something in setup fails
 	init_watchdog();
 	start_watchdog();
 
@@ -19,9 +18,12 @@ void setup()
 
 	Serial.begin(SerialBaudRate);
 	Serial.flush();
-	wait_for(Serial, delay, WaitForSerialDelay);  // Serial implements operator bool()
+
+	reset_watchdog();  // Reset watchdog before waiting for serial connection
+	wait_for(Serial, delay, WaitForSerialDelay);  // Serial (instance of type HWCDC) implements operator bool()
 	set_printer(Serial);
 
+	reset_watchdog();  // init_wifi() waits for connection; reset watchdog first
 	bool ok = init_wifi();
 
 	if (ok) {
@@ -36,6 +38,7 @@ void loop()
 
 	if (Running) {
 		reset_watchdog();
+
 		my::printf("Broadcasting '%s' on port %hu... ", message, UdpBroadcastPort);
 
 		if (broadcast_udp_message(UdpBroadcastPort, message, sizeof(message))) {
