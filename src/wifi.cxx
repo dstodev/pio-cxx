@@ -24,7 +24,7 @@ bool init_wifi()
 
 	if (ok) {
 		WiFi.begin(ssid.c_str(), password.c_str());
-		auto result = WiFi.waitForConnectResult(WaitForWiFiDelay);
+		auto result = WiFi.waitForConnectResult(WaitForWiFiDelay * 1'000);
 		ok = result == WL_CONNECTED;
 
 		if (!ok) {

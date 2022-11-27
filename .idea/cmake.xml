@@ -2,7 +2,7 @@
 <project version="4">
   <component name="CMakeSharedSettings">
     <configurations>
-      <configuration PROFILE_NAME="XIAO-ESP32-C3" ENABLED="true" CONFIG_NAME="seeed_xiao_esp32c3" NO_GENERATOR="true" />
+      <configuration PROFILE_NAME="xiao-esp32-c3" ENABLED="true" CONFIG_NAME="seeed_xiao_esp32c3" />
     </configurations>
   </component>
 </project>

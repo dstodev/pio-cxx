@@ -20,7 +20,7 @@ void setup()
 	Serial.flush();
 
 	reset_watchdog();  // Reset watchdog before waiting for serial connection
-	wait_for(Serial, delay, WaitForSerialDelay);  // Serial (instance of type HWCDC) implements operator bool()
+	wait_for(Serial, delay, WaitForSerialDelay * 1'000);  // Serial (instance of type HWCDC) implements operator bool()
 	set_printer(Serial);
 
 	reset_watchdog();  // init_wifi() waits for connection; reset watchdog first
@@ -49,9 +49,12 @@ void loop()
 			Running = false;
 			my::printf("failed!\n");
 		}
+
+		// Reset watchdog as late as possible before yielding to other tasks, but only if running.
+		reset_watchdog();
 	}
 
-	// Give execution time to other tasks before turning off some components to save power
-	yield_for(ExtraProcessingTime);
+	// Give execution time to other tasks before turning off some components to save power.
+	yield_for(TaskProcessingTime);
 	start_sleep();
 }
